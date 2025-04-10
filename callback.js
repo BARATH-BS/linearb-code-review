@@ -1,36 +1,33 @@
-function getItem(itemName,callback) {
-    setTimeout(() => {
-        console.log(`${itemName} - added`);
-        callback()
-    }, 2000);
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function putItem(callback){
-    setTimeout(() => {
-        console.log(`Item added to the dish`)
-        callback()
-    }, 1000);
+async function getItem(itemName) {
+    await delay(2000);
+    console.log(`${itemName} - added`);
 }
 
-function cook(callback){
-    setTimeout(() => {
-        console.log(`Cooking......`)
-        callback()
-    }, 5000);
+async function putItem() {
+    await delay(1000);
+    console.log(`Item added to the dish`);
 }
 
-function readyToServer(){
-    setTimeout(() => {
-        console.log(`Ready to serve`)
-    }, 2000);
+async function cook() {
+    await delay(5000);
+    console.log(`Cooking......`);
 }
 
-getItem(`curd`, () => {
-    getItem(`rice`, () => {
-        putItem(() => {
-            cook( () => {
-                readyToServer()
-            })
-        })
-    })
-})
+async function readyToServe() {
+    await delay(2000);
+    console.log(`Ready to serve`);
+}
+
+async function prepareDish() {
+    await getItem('curd');
+    await getItem('rice');
+    await putItem();
+    await cook();
+    await readyToServe();
+}
+
+prepareDish();
