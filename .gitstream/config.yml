@@ -1,4 +1,4 @@
-# -*- mode: yaml -*-
+# .gitstream/config.yml
 
 manifest:
   version: 1.0
@@ -6,14 +6,12 @@ manifest:
 automations:
   linearb_ai_review:
     if:
-      - {{ IS_NOT_A_BOT }}
+      - {{ pr.author | match(list=['github-actions', 'dependabot', '[bot]']) | nope }}
     run:
       - action: code-review@v1
 
   linearb_ai_description:
     if:
-      - {{ IS_NOT_A_BOT }}
+      - {{ pr.author | match(list=['github-actions', 'dependabot', '[bot]']) | nope }}
     run:
       - action: describe-changes@v1
-
-IS_NOT_A_BOT: {{ pr.author | match(list=['github-actions', 'dependabot', '[bot]']) | nope }}
